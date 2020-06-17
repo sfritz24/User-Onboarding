@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
 import axios from 'axios';
+import formSchema from './components/FormSchema';
+import * as yup from 'yup';
 
 const initialFormValues = {
   firstName: '',
@@ -49,6 +51,30 @@ function App() {
     })
     .finally(() =>{
       setFormValues(initialFormValues)
+    })
+  }
+
+  const onInputChange = (event) =>{
+    const {name, value} = event.target
+    yup
+      .reach(formSchema, name)
+      .validate(value)
+      .then(() =>{
+        setFormErrors({
+          ...formErrors,
+          [name]: ''
+        })
+      })
+      .catch(error =>{
+        setFormErrors({
+          ...formErrors,
+          [name]: error.errors[0]
+        })
+      })
+
+    setFormValues({
+      ...formValues,
+      [name]: value
     })
   }
 
