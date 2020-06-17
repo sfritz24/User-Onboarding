@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
+import axios from 'axios';
 
 const initialFormValues = {
   firstName: '',
@@ -28,12 +29,22 @@ function App() {
   const {formErrors, setFormErrors} = useState(initialFormErrors)
   const {disabled, setDisabled} = useState(initialDisabled)
 
+  const getMembers = () =>{
+    axios.get('https://reqres.in/api/users')
+    .then(response =>{
+      setMembers(response.data.data)
+    })
+    .catch(error =>{
+      console.log('this is the error:', error)
+    })
+  }
+
   return (
     <div className="App">
       <header><h1>Please Sign-Up!</h1></header>
       <div>
         <div>Form</div>
-        <div>Card</div>
+        <div>Member</div>
       </div>
     </div>
   );

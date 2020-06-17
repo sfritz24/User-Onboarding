@@ -21,3 +21,5 @@ const formSchema = yup.object().shape({
     .boolean()
     .oneOf([true], "Must accept Terms and Conditions"),
 })
+
+export default formSchema
