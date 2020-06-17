@@ -101,6 +101,16 @@ function App() {
     newMember(newMember)
   }
 
+  useEffect(() =>{
+    getMembers()
+  }, [])
+
+  useEffect(() =>{
+    formSchema.isValid(formValues).then(valid =>{
+      setDisabled(!valid)
+    })
+  }, [formValues])
+
   return (
     <div className="App">
       <header><h1>Please Sign-Up!</h1></header>
