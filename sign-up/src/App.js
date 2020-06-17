@@ -78,6 +78,17 @@ function App() {
     })
   }
 
+  const checkBoxChange = (event) =>{
+    const {name, checked} = event.target
+
+    setFormValues({
+      ...formValues,
+      [name]: checked
+    })
+  }
+
+  
+
   return (
     <div className="App">
       <header><h1>Please Sign-Up!</h1></header>
