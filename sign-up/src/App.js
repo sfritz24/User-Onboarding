@@ -1,18 +1,20 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css';
 
 const initialFormValues = {
-  name: '',
+  firstName: '',
+  lastName: '',
   email: '',
   password: '',
   termsofuse: false,
 }
 
 const initialFormErrors = {
-  name: '',
+  firstName: '',
+  lastName: '',
   email: '',
   password: '',
-  termsofuse: false,
+  termsOfUse: false,
 }
 
 const initialMembers = []
@@ -20,6 +22,12 @@ const initialMembers = []
 const initialDisabled = true
 
 function App() {
+
+  const {members, setMembers} = useState(initialMembers)
+  const {formValues, setFormValues} = useState(initialFormValues)
+  const {formErrors, setFormErrors} = useState(initialFormErrors)
+  const {disabled, setDisabled} = useState(initialDisabled)
+
   return (
     <div className="App">
       <header><h1>Please Sign-Up!</h1></header>
