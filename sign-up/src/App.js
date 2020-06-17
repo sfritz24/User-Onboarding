@@ -87,7 +87,19 @@ function App() {
     })
   }
 
-  
+  const onSubmit = (event) =>{
+    event.preventDefault()
+
+    const newMember = {
+      firstName: formValues.firstName.trim(),
+      lastName: formValues.lastName.trim(),
+      email: formValues.email.trim(),
+      password: formValues.password,
+      termsOfUse: formValues.termsOfUse,
+    }
+
+    newMember(newMember)
+  }
 
   return (
     <div className="App">
