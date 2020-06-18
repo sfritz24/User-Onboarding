@@ -29,3 +29,15 @@ describe('test last name input and submit button', ()=>{
         cy.get('button').should('be.disabled')
     })
 })
+
+describe('test email input and submit button', ()=>{
+    it('can type new email', ()=>{
+        cy.get('input[name=email]')
+        .type('shanon@fritz.com')
+        .should('have.value', 'shanon@fritz.com')
+    })
+
+    it('submit button should still be disabled', ()=>{
+        cy.get('button').should('be.disabled')
+    })
+})
