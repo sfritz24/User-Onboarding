@@ -34,18 +34,8 @@ function App() {
   const [formErrors, setFormErrors] = useState(initialFormErrors)
   const [disabled, setDisabled] = useState(initialDisabled)
 
-  const getMembers = () =>{
-    axios.get('https://reqres.in/api/users')
-    .then(response =>{
-      setMembers(response.data.data)
-    })
-    .catch(error =>{
-      console.log('this is the error:', error)
-    })
-  }
-
-  const addNewMember = () =>{
-    axios.post('https://reqres.in/api/users')
+  const addNewMember = (newMember) =>{
+    axios.post('https://reqres.in/api/users', newMember)
     .then(response =>{
       setMembers([...members, response.data])
     })
@@ -82,7 +72,7 @@ function App() {
   }
 
   const checkBoxChange = (event) =>{
-    const {name, checked} = event.target.value
+    const {name, checked} = event.target
 
     yup
       .reach(formSchema, name)
@@ -141,6 +131,7 @@ function App() {
         />
         {
           members.map(member =>{
+            console.log(member)
             return (<Member key={member.id} details={member}/>)
           })
         }
