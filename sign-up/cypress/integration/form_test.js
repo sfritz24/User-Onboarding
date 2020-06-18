@@ -58,10 +58,24 @@ describe('test click checkbox and submit button', ()=>{
     it('can click checkbox', ()=>{
         cy.get('input[name=termsOfUse]')
         .click()
-        .should('have.checked')
+        .should('have.checked', 'true')
     })
 
     it('submit button should be enabled', ()=>{
         cy.get('button').should('be.enabled')
+    })
+})
+
+describe('test submit button and clearing of form', ()=>{
+    it('can click sumbit button', ()=>{
+        cy.get('button').click()
+    })
+
+    it('form clears', ()=>{
+        cy.get('input[name=firstName]').should('be.empty')
+        cy.get('input[name=lastName]').should('be.empty')
+        cy.get('input[name=email]').should('be.empty')
+        cy.get('input[name=password]').should('be.empty')
+        cy.get('input[name=termsOfUse]').should('have.checked')
     })
 })
