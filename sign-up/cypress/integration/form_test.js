@@ -41,3 +41,15 @@ describe('test email input and submit button', ()=>{
         cy.get('button').should('be.disabled')
     })
 })
+
+describe('test password input and submit button', ()=>{
+    it('can type new password', ()=>{
+        cy.get('input[name=password]')
+        .type('happygirl')
+        .should('have.value', 'happygirl')
+    })
+
+    it('submit button should still be disabled', ()=>{
+        cy.get('button').should('be.disabled')
+    })
+})
