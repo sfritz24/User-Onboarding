@@ -3,6 +3,9 @@ import './App.css';
 import axios from 'axios';
 import formSchema from './components/FormSchema';
 import * as yup from 'yup';
+import Form from './components/Form';
+import Member from './components/Member';
+import { v4 as uuid } from 'uuid';
 
 const initialFormValues = {
   firstName: '',
@@ -26,10 +29,10 @@ const initialDisabled = true
 
 function App() {
 
-  const {members, setMembers} = useState(initialMembers)
-  const {formValues, setFormValues} = useState(initialFormValues)
-  const {formErrors, setFormErrors} = useState(initialFormErrors)
-  const {disabled, setDisabled} = useState(initialDisabled)
+  const [members, setMembers] = useState(initialMembers)
+  const [formValues, setFormValues] = useState(initialFormValues)
+  const [formErrors, setFormErrors] = useState(initialFormErrors)
+  const [disabled, setDisabled] = useState(initialDisabled)
 
   const getMembers = () =>{
     axios.get('https://reqres.in/api/users')
@@ -41,10 +44,10 @@ function App() {
     })
   }
 
-  const newMember = () =>{
+  const addNewMember = () =>{
     axios.post('https://reqres.in/api/users')
     .then(response =>{
-      setMembers([...members, response.data.data])
+      setMembers([...members, response.data])
     })
     .catch(error =>{
       console.log('this is the error:', error)
@@ -79,7 +82,23 @@ function App() {
   }
 
   const checkBoxChange = (event) =>{
-    const {name, checked} = event.target
+    const {name, checked} = event.target.value
+
+    yup
+      .reach(formSchema, name)
+      .validate(checked)
+      .then(() =>{
+        setFormErrors({
+          ...formErrors,
+          [name]: ''
+        })
+      })
+      .catch(error =>{
+        setFormErrors({
+          ...formErrors,
+          [name]: error.errors[0]
+        })
+      })
 
     setFormValues({
       ...formValues,
@@ -91,23 +110,20 @@ function App() {
     event.preventDefault()
 
     const newMember = {
-      firstName: formValues.firstName.trim(),
-      lastName: formValues.lastName.trim(),
-      email: formValues.email.trim(),
+      firstName: formValues.firstName,
+      lastName: formValues.lastName,
+      email: formValues.email,
       password: formValues.password,
       termsOfUse: formValues.termsOfUse,
+      id: uuid(),
     }
 
-    newMember(newMember)
+    addNewMember(newMember)
   }
 
   useEffect(() =>{
-    getMembers()
-  }, [])
-
-  useEffect(() =>{
     formSchema.isValid(formValues).then(valid =>{
-      setDisabled(!valid)
+      setDisabled(!valid);
     })
   }, [formValues])
 
@@ -115,8 +131,19 @@ function App() {
     <div className="App">
       <header><h1>Please Sign-Up!</h1></header>
       <div>
-        <div>Form</div>
-        <div>Member</div>
+        <Form
+        values={formValues}
+        onInputChange={onInputChange}
+        checkBoxChange={checkBoxChange}
+        onSubmit={onSubmit}
+        disabled={disabled}
+        errors={formErrors}
+        />
+        {
+          members.map(member =>{
+            return (<Member key={member.id} details={member}/>)
+          })
+        }
       </div>
     </div>
   );
