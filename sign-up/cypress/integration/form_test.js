@@ -53,3 +53,15 @@ describe('test password input and submit button', ()=>{
         cy.get('button').should('be.disabled')
     })
 })
+
+describe('test click checkbox and submit button', ()=>{
+    it('can click checkbox', ()=>{
+        cy.get('input[name=termsOfUse]')
+        .click()
+        .should('have.checked')
+    })
+
+    it('submit button should be enabled', ()=>{
+        cy.get('button').should('be.enabled')
+    })
+})

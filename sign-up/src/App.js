@@ -12,7 +12,7 @@ const initialFormValues = {
   lastName: '',
   email: '',
   password: '',
-  termsofuse: false,
+  termsOfUse: false,
 }
 
 const initialFormErrors = {
