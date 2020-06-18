@@ -79,3 +79,17 @@ describe('test submit button and clearing of form', ()=>{
         cy.get('input[name=termsOfUse]').should('have.checked')
     })
 })
+
+describe('test errors if no email', ()=>{
+    it('type in the inputs', ()=>{
+        cy.get('input[name=firstName]').type('June')
+        cy.get('input[name=lastName]').type('Fritz')
+        cy.get('input[name=email]').type('june')
+        cy.get('input[name=password]').type('lucygirl')
+        cy.get('input[name=termsOfUse]').click()
+    })
+
+    it('should have error displayed', ()=>{
+        cy.get('div#emailError').should('exist')
+    })
+})

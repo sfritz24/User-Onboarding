@@ -15,11 +15,11 @@ function Form (props){
                 <h2>Please Enter Information</h2>
                 <button disabled={disabled}>Submit</button>
                 <div>
-                    <div>{errors.firstName}</div>
-                    <div>{errors.lastName}</div>
-                    <div>{errors.email}</div>
-                    <div>{errors.password}</div>
-                    <div>{errors.termsOfUse}</div>
+                    <div id='firstNameError'>{errors.firstName}</div>
+                    <div id='lastNameError'>{errors.lastName}</div>
+                    <div id='emailError'>{errors.email}</div>
+                    <div id='passwordError'>{errors.password}</div>
+                    <div id='termsOfUseError'>{errors.termsOfUse}</div>
                 </div>
                 <div>
                     <label>First Name:&nbsp;
